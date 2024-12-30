@@ -2,8 +2,10 @@ package guru.springframework.spring6webapp.bootstrap;
 
 import guru.springframework.spring6webapp.domain.Author;
 import guru.springframework.spring6webapp.domain.Book;
+import guru.springframework.spring6webapp.domain.Publisher;
 import guru.springframework.spring6webapp.repositories.AuthorRepository;
 import guru.springframework.spring6webapp.repositories.BookRepository;
+import guru.springframework.spring6webapp.repositories.PublisherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +14,12 @@ public class BootstrapData implements CommandLineRunner {
 
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
+    private final PublisherRepository publisherRepository;
 
-    public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository) {
+    public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository, PublisherRepository publisherRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
+        this.publisherRepository = publisherRepository;
     }
 
 
@@ -52,5 +56,17 @@ public class BootstrapData implements CommandLineRunner {
         System.out.println("Started in Bootstrap");
         System.out.println("Athor Count: " + authorRepository.count());
         System.out.println("Book Count: " + bookRepository.count());
+
+        Publisher amazon = new Publisher();
+        amazon.setPublisherName("Amazon");
+        amazon.setAddress("Amazon Address");
+        amazon.setCity("Amazon City");
+        amazon.setState("Amazon State");
+        amazon.setZip("Amazon Zip");
+
+        Publisher amazonSaved = publisherRepository.save(amazon);
+
+        System.out.println("Started in Bootstrap Publisher");
+        System.out.println("Publisher Count: " + publisherRepository.count());
     }
 }
